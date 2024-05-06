@@ -6,6 +6,8 @@ use App\Models\Books;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use JustSteveKing\StatusCode\Http;
+use App\Http\Requests\BookRequest;
+
 
 class BookController extends Controller
 {
@@ -20,7 +22,7 @@ class BookController extends Controller
        
     }
 
-    public function store(Request $request)
+    public function store(Request $request, BookRequest $bookRequest)
     {
         $input_campo = $request->input('name');
         $dadosRepetidos = Books::where('name',$input_campo)->get();
@@ -31,12 +33,13 @@ class BookController extends Controller
                 'mensagem' => 'Registered book'
             ],Http::BAD_REQUEST());
         }
+    
+        $val = $bookRequest->validated();
+
         return new JsonResponse([
-            $cadastro = Books::Create([
-                'name' => $request->input('name'),
-                'isbn' => $request->input('isbn'),
-                'value' => $request->input('value')
-            ])
+            'mensagem' => 'Store Successfully',
+            'status' => 'CREATED',
+            'dados' => Books::Create($val),
         ],Http::CREATED());
     }
 
@@ -50,26 +53,27 @@ class BookController extends Controller
             'mensagem' => 'Edited Successfully',
             'status' => 'ok',
             'dados' => $data,
-    ]   ,Http::OK());
-      // dd($data) ;
-
-        // return new JsonResponse([
-        //     $edit = Books::Create([
-        //         'name' => $request->input('name'),
-        //         'isbn' => $request->input('isbn'),
-        //         'value' => $request->input('value')
-        //     ])
-        // ],Http::OK());
-
-
-    //    // dd("Editar Modal");
-    //     $titulo = "Lista de Contas Pagas";
-    //     $realizado = PagamentoFixo::find($id);   
-    //     $listaCategorias = Categoria::all();   
-    //     //dd($realizado);
-    //     return view('realizado/editar',compact('realizado','titulo','listaCategorias'));
+        ]   ,Http::OK());
+     
     }
-    
+
+    public function delete($id)
+    {
+        $confId = Books:: where('id',$id)->get();
+        if( !isset($confId->toArray()[0]['id']))
+        {
+            return new JsonResponse([
+                'mensagem' => 'Id not found'
+            ],Http::BAD_REQUEST());
+        }else{
+            $data = Books:: findOrFail($id);
+            $data->delete($data);
+
+            return new JsonResponse([
+                'mensagem' => 'Delete Successfully',
+                'status' => 'ok',
+                'dados' => $data,
+            ]   ,Http::OK());
+        }
+    }
 }
-
-

@@ -30,24 +30,17 @@ use Illuminate\Support\Facades\Route;
         Route::get('list','BookController@list')->name('list');
         Route::post('store','BookController@store')->name('store');
         Route::put('edit/{id}','BookController@edit')->name('edit');
+        Route::delete('delete/{id}','BookController@delete')->name('delete');
+       
+    });
+
+    Route::prefix('store')->as('store.')->group(function(){
+
+        Route::get('list','StoreController@list')->name('list');
+        Route::post('store','StoreController@store')->name('store');
+        Route::put('edit/{id}','StoreController@edit')->name('edit');
+        Route::delete('delete/{id}','StoreController@delete')->name('delete');
        
     });
 //});  
 
-/* 
-      Route::get('lista','Fixo\PagamentoFixoController@lista')->name('lista');
-  //      Route::get('lista','Fixo\PagamentoFixoController@auto')->name('auto');
-        Route::get('cadastro','Fixo\PagamentoFixoController@cadastro')->name('cadastro');
-        Route::post('cadastro','Fixo\PagamentoFixoController@salvar')->name('salvar');
-        Route::get('lista/{id}','Fixo\PagamentoFixoController@realizadoFixo')->name('realizadoFixo');
-        Route::get('editar/{id}','Fixo\PagamentoFixoController@editar')->name('pagamento/fixo.editar');
-        Route::post('editar/{id}','Fixo\PagamentoFixoController@update')->name('update');
-        Route::post('deletar/{id}','Fixo\PagamentoFixoController@deletar')->name('deletar');   
-        
-        Route::post('lista','Fixo\PagamentoFixoController@categoria')->name('categoria');
-        Route::get('editar/{id}','Fixo\PagamentoFixoController@editar')->name('pagamento/fixo.editar');
-        Route::post('lista/{id}','Fixo\PagamentoFixoController@update')->name('update');
-        
-        Route::get('show/{id}','Fixo\PagamentoFixoController@show')->name('show');
-
-*/

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class BookRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +23,16 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'address' => 'required|string',
-            //'value' => 'required|between:0,99.99',
+            'isbn' => 'required|string',
+            'value' => 'required|between:0,99.99',
         ];
     }
     public function messages()
     {
         return [
             'name'  => 'Name Required',
-            'address'  => 'Address Required',
-            'active' => 'Active Required',
+            'isbn'  => 'isbn Required',
+            'value' => 'value Required',
         ];
     }
 }

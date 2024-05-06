@@ -20,4 +20,16 @@ class Store extends Model
         'created_at',
         'updated_at'
     ];
+
+    public static function AllResults()
+    {
+        return Store:: select(
+            'id',
+            'name',
+            'address',
+            'active'
+        )
+        ->orderBy('name', 'DESC')
+        ->get();
+    }
 }
