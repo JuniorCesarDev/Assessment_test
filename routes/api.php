@@ -18,12 +18,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// Route::get('/', function () {
-//     return view('auth/login');
-// })->middleware(['auth', 'verified']);
-
-// em uso
-//Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function(){
 
     Route::prefix('book')->as('book.')->group(function(){
 
@@ -42,5 +37,5 @@ use Illuminate\Support\Facades\Route;
         Route::delete('delete/{id}','StoreController@delete')->name('delete');
        
     });
-//});  
+});  
 
